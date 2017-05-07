@@ -5,9 +5,13 @@ In hoofdstuk 1 wordt gekeken naar de wiskundige en natuurkundige formules die in
 De volgende onderwerpen worden besproken in hoofdstuk 1:
 
 •	Functies en vergelijkingen
+
 •	Hoeken
+
 •	Vectoren
+
 •	Local Space en World Space
+
 •	Natuurkunde
 
 De belangrijkste punten besproken in hoofdstuk 1:
