@@ -141,6 +141,21 @@ void FWApplication::DrawTexture(SDL_Texture * texture, int xOffset, int yOffset,
 	SDL_RenderCopy(mRenderer, texture, NULL, &rect);
 }
 
+void FWApplication::DrawTexture(SDL_Texture * texture, int xOffset, int yOffset, int width, int height, double angle, int direction)
+{
+	SDL_Rect rect = { xOffset - (width / 2), yOffset - (height / 2), width, height };
+
+	//SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+	SDL_RendererFlip flip = SDL_FLIP_NONE;
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
+	if (direction < 1)
+	{
+		flip = SDL_FLIP_VERTICAL;
+	}
+	SDL_RenderCopyEx(mRenderer, texture, NULL, &rect, angle, NULL, flip);
+}
+
+
 void FWApplication::StartTick()
 {
 	SDL_RenderClear(mRenderer);
