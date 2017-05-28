@@ -17,6 +17,7 @@ public:
 	Vector2D opposite();
 	double getLength();
 	double distanceTo(const Vector2D&);
+	bool operator==(const Vector2D&);
 	Vector2D& operator+=(const Vector2D&);
 	Vector2D operator+(const Vector2D&);
 	Vector2D operator-(const Vector2D&);

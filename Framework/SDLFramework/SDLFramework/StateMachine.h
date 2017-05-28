@@ -1,6 +1,7 @@
 #pragma once
 #include "State.h"
-
+#include "MovingEntity.h"
+#include <memory>
 template <class entity_type>
 class StateMachine
 {

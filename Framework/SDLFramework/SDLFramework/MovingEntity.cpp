@@ -7,6 +7,7 @@
 
 void MovingEntity::Update(double deltaTime)
 {
+	m_stateMachine->update(deltaTime);
 }
 
 void MovingEntity::Render()
@@ -35,7 +36,7 @@ MovingEntity::MovingEntity(double x, double y, int width, int height, double mas
 {
 	m_velocity = Vector2D(0, 0);
 	m_heading = Vector2D(0, 0);
-	
+	m_steering = std::make_shared<SteeringBehaviors>(this);
 	m_texture = FWApplication::GetInstance()->LoadTexture("pitch.jpg");
 }
 
@@ -92,6 +93,17 @@ double MovingEntity::getAngle()
 	return angleDegrees;
 }
 
+std::shared_ptr<SteeringBehaviors> MovingEntity::getSteeringBehaviour()
+{
+	return m_steering;
+	
+}
+
+std::shared_ptr<StateMachine<MovingEntity>> MovingEntity::getStateMachine()
+{
+	return m_stateMachine;
+}
+
 
 Vector2D MovingEntity::m_side()
 {
@@ -121,6 +133,7 @@ int MovingEntity::getDirection()
 
 void MovingEntity::move(Vector2D influence, double deltaTime)
 {
+	
 	Vector2D steeringForce = influence;
 
 
@@ -148,7 +161,8 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 	double x = m_position.getX();
 	double y = m_position.getY();
 
-	if (x > 610)
+	
+	/*if (x > 610)
 	{
 		m_position.setX(x - 610);
 	}
@@ -164,5 +178,5 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 	else if (y < -10)
 	{
 		m_position.setY(y + 610);
-	}
+	}*/
 }

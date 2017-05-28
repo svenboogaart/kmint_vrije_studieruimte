@@ -1,6 +1,6 @@
 #pragma once
 #include "Vector2D.h"
-#include "MovingEntity.h"
+class MovingEntity;
 class Vehicle;
 class SteeringBehaviors
 {

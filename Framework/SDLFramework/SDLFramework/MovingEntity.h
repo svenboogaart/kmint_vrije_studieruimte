@@ -2,6 +2,9 @@
 #include "Vector2D.h"
 #include "Telegram.h"
 #include "FWApplication.h"
+#include "StateMachine.h"
+#include <memory>
+#include "SteeringBehaviors.h"
 
 class MovingEntity
 {
@@ -18,7 +21,8 @@ protected:
 	Vector2D  m_position;
 	int m_width;
 	int m_height;
-
+	std::shared_ptr<StateMachine<MovingEntity>> m_stateMachine;
+	std::shared_ptr<SteeringBehaviors> m_steering;
 public:
 	void Update(double deltaTime);
 	void Render();
@@ -33,6 +37,8 @@ public:
 	void setVelocity(Vector2D);
 	void calculateHeading();
 	double getAngle();
+	std::shared_ptr<SteeringBehaviors> getSteeringBehaviour();
+	std::shared_ptr<StateMachine<MovingEntity>> getStateMachine();
 	//Tegenovergestelde vector van de richtings vector (velocity)
 	Vector2D m_side();
 	double getMass();

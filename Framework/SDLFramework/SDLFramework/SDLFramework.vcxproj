@@ -85,6 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BallStates.cpp" />
     <ClCompile Include="BaseGameEntity.cpp" />
     <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="FieldPlayer.cpp" />
@@ -99,6 +100,7 @@
     <ClCompile Include="SoccerBall.cpp" />
     <ClCompile Include="SoccerPitch.cpp" />
     <ClCompile Include="SoccerTeam.cpp" />
+    <ClCompile Include="SteeringBehaviors.cpp" />
     <ClCompile Include="Telegram.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -106,6 +108,7 @@
     <None Include="SDL2.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BallStates.h" />
     <ClInclude Include="BaseGameEntity.h" />
     <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Config.h" />
@@ -124,6 +127,7 @@
     <ClInclude Include="SoccerTeam.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="SteeringBehaviors.h" />
     <ClInclude Include="Telegram.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>

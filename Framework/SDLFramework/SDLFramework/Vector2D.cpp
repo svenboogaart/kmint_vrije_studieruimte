@@ -73,6 +73,12 @@ double Vector2D::distanceTo(const Vector2D & destination)
 	return fabs(distance);
 }
 
+bool Vector2D::operator==(const Vector2D & other)
+{
+	return(m_x == other.getX() && m_y == other.getY());
+}
+
+
 Vector2D& Vector2D::operator+=(const Vector2D& toAdd)
 {
 	m_x += toAdd.getX();

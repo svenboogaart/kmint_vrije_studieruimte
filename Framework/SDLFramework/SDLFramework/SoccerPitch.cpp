@@ -2,7 +2,7 @@
 
 
 
-SoccerPitch::SoccerPitch():m_ball(*new SoccerBall(500,300,40,40,10,100,100,100))
+SoccerPitch::SoccerPitch():m_ball(*new SoccerBall(0,0,40,40,10,100,100,100))
 {
 	m_texture = FWApplication::GetInstance()->LoadTexture("pitch.jpg");
 }
@@ -14,7 +14,7 @@ SoccerPitch::~SoccerPitch()
 
 void SoccerPitch::Update(double deltaTime)
 {
-	
+	m_ball.Update(deltaTime);
 }
 
 void SoccerPitch::Render()
