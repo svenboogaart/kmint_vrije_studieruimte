@@ -86,11 +86,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseGameEntity.cpp" />
+    <ClCompile Include="BasePlayer.cpp" />
+    <ClCompile Include="FieldPlayer.cpp" />
     <ClCompile Include="FWApplication.cpp" />
     <ClCompile Include="GameWorld.cpp" />
+    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="GoalKeeper.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="ExampleGameObject.cpp" />
     <ClCompile Include="MovingEntity.cpp" />
+    <ClCompile Include="PlayerBase.cpp" />
+    <ClCompile Include="SoccerBall.cpp" />
+    <ClCompile Include="SoccerPitch.cpp" />
+    <ClCompile Include="SoccerTeam.cpp" />
+    <ClCompile Include="Telegram.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -98,12 +107,24 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseGameEntity.h" />
+    <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="FieldPlayer.h" />
     <ClInclude Include="FWApplication.h" />
     <ClInclude Include="ExampleGameObject.h" />
     <ClInclude Include="GameWorld.h" />
+    <ClInclude Include="Goal.h" />
+    <ClInclude Include="GoalKeeper.h" />
     <ClInclude Include="IGameObject.h" />
+    <ClInclude Include="Main.h" />
     <ClInclude Include="MovingEntity.h" />
+    <ClInclude Include="PlayerBase.h" />
+    <ClInclude Include="SoccerBall.h" />
+    <ClInclude Include="SoccerPitch.h" />
+    <ClInclude Include="SoccerTeam.h" />
+    <ClInclude Include="State.h" />
+    <ClInclude Include="StateMachine.h" />
+    <ClInclude Include="Telegram.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

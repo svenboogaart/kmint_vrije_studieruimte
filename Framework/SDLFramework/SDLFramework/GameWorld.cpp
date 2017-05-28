@@ -10,3 +10,7 @@ GameWorld::GameWorld()
 GameWorld::~GameWorld()
 {
 }
+
+void GameWorld::draw()
+{
+}

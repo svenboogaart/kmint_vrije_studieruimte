@@ -44,6 +44,7 @@ struct Color
 class FWApplication
 {
 public:
+	uint32_t mDeltaTimeMS; // The actual loop cycle time
 	FWApplication(int offsetX = 50, int offsetY = 50, int width = 800, int height = 600);
 	~FWApplication();
 
@@ -256,7 +257,7 @@ private:
 	uint32_t mTimeMS;
 	uint32_t mTargetDelayMS;
 	uint32_t mStartCycleTimeMS;
-	uint32_t mDeltaTimeMS; // The actual loop cycle time
+	
 
 	bool mIsRunning;
 
@@ -266,6 +267,7 @@ private:
 	std::string mFontName;
 	uint32_t mFontSize;
 	//uint32_t mColor;
+		
 
 };
 
