@@ -1,8 +1,8 @@
 #pragma once
 #include "PlayerBase.h"
-class GoalKeeper:PlayerBase
+class GoalKeeper:public PlayerBase
 {
 public:
-	GoalKeeper(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate);
+	GoalKeeper(Vector2D initialPosition);
 };
 

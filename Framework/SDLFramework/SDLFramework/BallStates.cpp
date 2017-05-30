@@ -9,7 +9,7 @@ void ReturnState::enter(MovingEntity * ball)
 
 void ReturnState::execute(MovingEntity * ball , double deltaTime)
 {
-	Vector2D target = Vector2D(500, 300);
+	Vector2D target = ball->GetStartPosition();
 	ball->move(ball->getSteeringBehaviour()->seek(target),deltaTime);
 	if (ball->getPosition().distanceTo(target) < 10)
 	{

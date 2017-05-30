@@ -1,11 +1,14 @@
 #include "PlayerBase.h"
+#include "BallStates.h"
 
 
-
-PlayerBase::PlayerBase(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate)
-	:MovingEntity(x, y, width, height, mass, maxSpeed, maxForce, maxTurnRate)
+PlayerBase::PlayerBase(Vector2D initialPosition)
+	:MovingEntity(initialPosition.getX(), initialPosition.getY(), 50, 50, 50, 50, 50, 50)
 {
-
+	m_texture = FWApplication::GetInstance()->LoadTexture("football.png");
+	m_stateMachine = std::make_shared<StateMachine<MovingEntity>>(this);
+	std::shared_ptr<ReturnState> initialState = std::make_shared<ReturnState>();
+	m_stateMachine->setCurrentState(initialState);
 }
 
 

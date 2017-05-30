@@ -2,6 +2,7 @@
 #include "BallStates.h"
 
 
+
 SoccerBall::SoccerBall(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate)
 	:MovingEntity(x, y, width, height, mass, maxSpeed, maxForce, maxTurnRate)
 {

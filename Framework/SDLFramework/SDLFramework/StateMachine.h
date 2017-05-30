@@ -59,7 +59,7 @@ inline void StateMachine<entity_type>::revert()
 template<class entity_type>
 inline void StateMachine<entity_type>::update(double deltaTime)
 {
-	if (m_currentState) {
+	if (m_currentState != NULL) {
 		m_currentState->execute(m_owner, deltaTime);
 	}
 }

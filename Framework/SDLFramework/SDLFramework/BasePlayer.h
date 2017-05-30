@@ -6,7 +6,7 @@
 class BasePlayer:MovingEntity
 {
 public:
-	BasePlayer(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate);
+	BasePlayer(double x, double y, double mass, double maxSpeed, double maxForce, double maxTurnRate);
 	
 };
 

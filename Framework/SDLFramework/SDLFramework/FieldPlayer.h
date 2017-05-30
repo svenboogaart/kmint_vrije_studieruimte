@@ -1,9 +1,9 @@
 #pragma once
-#include "BasePlayer.h"
+#include "PlayerBase.h"
 
-class FieldPlayer:BasePlayer
+class FieldPlayer:public PlayerBase
 {
 public:
-	FieldPlayer(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate);
+	FieldPlayer(Vector2D initialPosition);
 };
 

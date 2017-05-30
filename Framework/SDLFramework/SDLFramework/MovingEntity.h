@@ -17,13 +17,15 @@ protected:
 	const double m_maxSpeed;
 	const double m_maxForce;
 	const double m_maxTurnRate;
-
+	
 	Vector2D  m_position;
 	int m_width;
 	int m_height;
 	std::shared_ptr<StateMachine<MovingEntity>> m_stateMachine;
 	std::shared_ptr<SteeringBehaviors> m_steering;
+	Vector2D  m_startPosition;
 public:
+	Vector2D GetStartPosition();
 	void Update(double deltaTime);
 	void Render();
 	bool voidHandleMessage(Telegram telegram);

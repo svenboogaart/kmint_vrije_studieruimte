@@ -87,7 +87,6 @@
   <ItemGroup>
     <ClCompile Include="BallStates.cpp" />
     <ClCompile Include="BaseGameEntity.cpp" />
-    <ClCompile Include="BasePlayer.cpp" />
     <ClCompile Include="FieldPlayer.cpp" />
     <ClCompile Include="FWApplication.cpp" />
     <ClCompile Include="GameWorld.cpp" />
@@ -110,7 +109,6 @@
   <ItemGroup>
     <ClInclude Include="BallStates.h" />
     <ClInclude Include="BaseGameEntity.h" />
-    <ClInclude Include="BasePlayer.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="FieldPlayer.h" />
     <ClInclude Include="FWApplication.h" />

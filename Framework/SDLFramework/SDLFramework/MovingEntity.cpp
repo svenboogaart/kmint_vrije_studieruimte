@@ -1,13 +1,20 @@
 #include "MovingEntity.h"
 
+#include "BallStates.h"
+
 # define M_PI           3.14159265358979323846  /* pi */
 
 
 
 
+Vector2D MovingEntity::GetStartPosition()
+{
+	return m_startPosition;
+}
+
 void MovingEntity::Update(double deltaTime)
 {
-	m_stateMachine->update(deltaTime);
+	//m_stateMachine->update(deltaTime);
 }
 
 void MovingEntity::Render()
@@ -32,12 +39,17 @@ MovingEntity::MovingEntity(double x, double y, int width, int height, double mas
 	m_mass(mass),
 	m_height(height),
 	m_width(width),
-	m_position (Vector2D(x, y))
+	m_position (Vector2D(300,500)),
+	m_startPosition(Vector2D(x,y))
+
 {
 	m_velocity = Vector2D(0, 0);
 	m_heading = Vector2D(0, 0);
 	m_steering = std::make_shared<SteeringBehaviors>(this);
 	m_texture = FWApplication::GetInstance()->LoadTexture("pitch.jpg");
+	m_stateMachine = std::make_shared<StateMachine<MovingEntity>>(this);
+	std::shared_ptr<ReturnState> initialState = std::make_shared<ReturnState>();
+	m_stateMachine->setCurrentState(initialState);
 }
 
 MovingEntity::~MovingEntity()

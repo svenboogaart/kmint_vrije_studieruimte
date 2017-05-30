@@ -7,7 +7,7 @@
 #include <SDL_image.h>
 #include "FWApplication.h"
 
-BasePlayer::BasePlayer(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate)
-	:MovingEntity(x,  y,  width,  height,  mass,  maxSpeed,  maxForce,  maxTurnRate)
+BasePlayer::BasePlayer(double x, double y)
+	:MovingEntity(x,  y,  50,  50,  mass,  maxSpeed,  maxForce,  maxTurnRate)
 {
 }
