@@ -14,9 +14,9 @@ protected:
 	Vector2D m_heading;
 	SDL_Texture* m_texture;
 	double m_mass;
-	const double m_maxSpeed;
-	const double m_maxForce;
-	const double m_maxTurnRate;
+	double m_maxSpeed;
+	double m_maxForce;
+	double m_maxTurnRate;
 	
 	Vector2D  m_position;
 	int m_width;

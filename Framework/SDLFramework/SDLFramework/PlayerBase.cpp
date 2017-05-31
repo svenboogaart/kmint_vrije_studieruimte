@@ -3,9 +3,8 @@
 
 
 PlayerBase::PlayerBase(Vector2D initialPosition)
-	:MovingEntity(initialPosition.getX(), initialPosition.getY(), 50, 50, 50, 50, 50, 50)
+	:MovingEntity(initialPosition.getX(), initialPosition.getY(), 50, 50, 10, 200, 200, 100)
 {
-	m_texture = FWApplication::GetInstance()->LoadTexture("football.png");
 	m_stateMachine = std::make_shared<StateMachine<MovingEntity>>(this);
 	std::shared_ptr<ReturnState> initialState = std::make_shared<ReturnState>();
 	m_stateMachine->setCurrentState(initialState);

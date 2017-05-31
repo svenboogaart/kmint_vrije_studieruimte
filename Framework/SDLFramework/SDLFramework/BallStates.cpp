@@ -10,8 +10,8 @@ void ReturnState::enter(MovingEntity * ball)
 void ReturnState::execute(MovingEntity * ball , double deltaTime)
 {
 	Vector2D target = ball->GetStartPosition();
-	ball->move(ball->getSteeringBehaviour()->seek(target),deltaTime);
-	if (ball->getPosition().distanceTo(target) < 10)
+	ball->move(ball->getSteeringBehaviour()->arrive(target),deltaTime);
+	if (ball->getPosition().distanceTo(target) < 5)
 	{
 		std::shared_ptr<WaitState> nextState = std::make_shared<WaitState>();
 		ball->getStateMachine()->changeState(nextState);

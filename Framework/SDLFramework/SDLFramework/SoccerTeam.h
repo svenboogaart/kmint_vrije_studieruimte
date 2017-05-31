@@ -12,7 +12,7 @@ private:
 	PlayerBase* m_controllingPlayer;
 
 public:
-	SoccerTeam(Vector2D goalyPosition, Vector2D defenderOnePosition, Vector2D defenderTwoPosition, Vector2D attackerOnePosition, Vector2D attackerTwoPosition);
+	SoccerTeam(Vector2D goalyPosition, Vector2D defenderOnePosition, Vector2D defenderTwoPosition, Vector2D attackerOnePosition, Vector2D attackerTwoPosition, SDL_Texture* _m_texture);
 	void Update(double detlaTime);
 	void Render();
 	bool CanShoot(Vector2D from, Vector2D to, Vector2D heading, double power);
