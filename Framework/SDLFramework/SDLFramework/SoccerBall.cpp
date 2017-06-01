@@ -1,15 +1,16 @@
 #include "SoccerBall.h"
-#include "BallStates.h"
+#include "MovingEntityStates.h"
 
 
 
-SoccerBall::SoccerBall(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate)
-	:MovingEntity(x, y, width, height, mass, maxSpeed, maxForce, maxTurnRate)
+SoccerBall::SoccerBall(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate, SoccerPitch* pitch)
+	:MovingEntity(x, y, width, height, mass, maxSpeed, maxForce, maxTurnRate, pitch)
 {
 	m_texture = FWApplication::GetInstance()->LoadTexture("football.png");
 	m_stateMachine = std::make_shared<StateMachine<MovingEntity>>(this);
-	std::shared_ptr<ReturnState> initialState = std::make_shared<ReturnState>();
+	std::shared_ptr<TestState> initialState = std::make_shared<TestState>();
 	m_stateMachine->setCurrentState(initialState);
+	m_stateMachine->changeState(initialState);
 }
 
 

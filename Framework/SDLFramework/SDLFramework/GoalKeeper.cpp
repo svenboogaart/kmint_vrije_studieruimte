@@ -2,8 +2,8 @@
 
 
 
-GoalKeeper::GoalKeeper(Vector2D initialPosition)
-	:PlayerBase(initialPosition)
+GoalKeeper::GoalKeeper(Vector2D initialPosition, SoccerPitch* pitch)
+	:PlayerBase(initialPosition,pitch)
 {
 	m_texture = FWApplication::GetInstance()->LoadTexture("keeper.png");
 	

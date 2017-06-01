@@ -17,5 +17,6 @@ public:
 	~SoccerPitch();
 	void Update(double deltaTime);
 	void Render();
+	SoccerBall * getBall();
 };
 

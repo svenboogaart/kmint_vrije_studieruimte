@@ -85,7 +85,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BallStates.cpp" />
+    <ClCompile Include="MovingEntityStates.cpp" />
     <ClCompile Include="BaseGameEntity.cpp" />
     <ClCompile Include="FieldPlayer.cpp" />
     <ClCompile Include="FWApplication.cpp" />
@@ -107,7 +107,7 @@
     <None Include="SDL2.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BallStates.h" />
+    <ClInclude Include="MovingEntityStates.h" />
     <ClInclude Include="BaseGameEntity.h" />
     <ClInclude Include="Config.h" />
     <ClInclude Include="FieldPlayer.h" />

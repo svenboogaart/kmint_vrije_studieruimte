@@ -3,6 +3,6 @@
 class GoalKeeper:public PlayerBase
 {
 public:
-	GoalKeeper(Vector2D initialPosition);
+	GoalKeeper(Vector2D initialPosition, SoccerPitch* pitch);
 };
 

@@ -1,9 +1,9 @@
 #include "PlayerBase.h"
-#include "BallStates.h"
+#include "MovingEntityStates.h"
 
 
-PlayerBase::PlayerBase(Vector2D initialPosition)
-	:MovingEntity(initialPosition.getX(), initialPosition.getY(), 50, 50, 10, 200, 200, 100)
+PlayerBase::PlayerBase(Vector2D initialPosition, SoccerPitch* pitch)
+	:MovingEntity(initialPosition.getX(), initialPosition.getY(), 50, 50, 2, 200, 200, 200,pitch)
 {
 	m_stateMachine = std::make_shared<StateMachine<MovingEntity>>(this);
 	std::shared_ptr<ReturnState> initialState = std::make_shared<ReturnState>();

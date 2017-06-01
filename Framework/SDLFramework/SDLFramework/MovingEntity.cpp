@@ -1,9 +1,8 @@
 #include "MovingEntity.h"
-
-#include "BallStates.h"
+#include "SoccerPitch.h"
+#include "MovingEntityStates.h"
 
 # define M_PI           3.14159265358979323846  /* pi */
-
 
 
 
@@ -32,16 +31,16 @@ bool MovingEntity::voidHandleMessage(Telegram telegram)
 	return false;
 }
 
-MovingEntity::MovingEntity(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate) :
+MovingEntity::MovingEntity(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate, SoccerPitch* pitch) :
 	m_maxSpeed(maxSpeed),
 	m_maxForce(maxForce),
 	m_maxTurnRate(maxTurnRate),
 	m_mass(mass),
 	m_height(height),
 	m_width(width),
-	m_position (Vector2D(500,300)),
-	m_startPosition(Vector2D(x,y))
-
+	m_position(Vector2D(500, 300)),
+	m_startPosition(Vector2D(x, y)),
+	m_pitch(pitch)
 {
 	m_velocity = Vector2D(0, 0);
 	m_heading = Vector2D(0, 0);
@@ -81,11 +80,21 @@ Vector2D MovingEntity::getHeading()
 	return m_heading;
 }
 
+SoccerPitch * MovingEntity::getPitch()
+{
+	return m_pitch;
+}
+
 void MovingEntity::setVelocity(Vector2D newValue)
 {
 	m_velocity = newValue;
 	//make sure vehicle does not exceed maximum velocity
 	m_velocity.truncate(m_maxSpeed);
+}
+
+void MovingEntity::setHeading(Vector2D newHeading)
+{
+	m_heading = newHeading;
 }
 
 void MovingEntity::calculateHeading()
@@ -155,7 +164,7 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 
 	m_velocity += acceleration * deltaTime;
 
-	//make sure vehicle does not exceed maximum velocity
+	//make sure entity does not exceed maximum velocity
 	m_velocity.truncate(m_maxSpeed);
 
 
@@ -174,21 +183,21 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 	double y = m_position.getY();
 
 	
-	/*if (x > 610)
+	if (x > 1000)
 	{
-		m_position.setX(x - 610);
+		m_velocity.setX(-m_velocity.getX());
 	}
-	else if (x < -10)
+	else if (x < -0)
 	{
-		m_position.setX(x + 610);
+		m_velocity.setX(-m_velocity.getX());
 	}
 
 	if (y > 610)
 	{
-		m_position.setY(y - 610);
+		m_velocity.setY(-m_velocity.getY());
 	}
 	else if (y < -10)
 	{
-		m_position.setY(y + 610);
-	}*/
+		m_velocity.setY(-m_velocity.getY());
+	}
 }
