@@ -7,6 +7,7 @@
 #include "SteeringBehaviors.h"
 
 class SoccerPitch;
+enum EntityType { BALL, FIELDPLAYER, GOALY };
 
 class MovingEntity
 {
@@ -20,14 +21,15 @@ protected:
 	double m_maxSpeed;
 	double m_maxForce;
 	double m_maxTurnRate;
-	
 	Vector2D  m_position;
 	int m_width;
 	int m_height;
 	std::shared_ptr<StateMachine<MovingEntity>> m_stateMachine;
 	std::shared_ptr<SteeringBehaviors> m_steering;
 	Vector2D  m_startPosition;
+
 public:
+	EntityType m_type;
 	Vector2D GetStartPosition();
 	void Update(double deltaTime);
 	void Render();

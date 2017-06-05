@@ -11,6 +11,7 @@ SoccerBall::SoccerBall(double x, double y, int width, int height, double mass, d
 	std::shared_ptr<TestState> initialState = std::make_shared<TestState>();
 	m_stateMachine->setCurrentState(initialState);
 	m_stateMachine->changeState(initialState);
+	m_type = EntityType::BALL;
 }
 
 

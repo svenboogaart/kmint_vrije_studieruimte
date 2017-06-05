@@ -40,3 +40,25 @@ void SoccerTeam::RequestPass(PlayerBase *)
 {
 }
 
+void SoccerTeam::AddGoal()
+{
+	m_points++;
+}
+
+int SoccerTeam::GetScore()
+{
+	return m_points;
+}
+
+void SoccerTeam::SetState(EntityStates state)
+{
+	if (state == RETURNSTATE)
+	{
+		for (PlayerBase* player : players) {
+			std::shared_ptr<ReturnState> initialState = std::make_shared<ReturnState>();
+			players.back()->getStateMachine()->changeState(initialState);
+		}
+		
+	}
+}
+

@@ -9,6 +9,7 @@
 Vector2D MovingEntity::GetStartPosition()
 {
 	return m_startPosition;
+
 }
 
 void MovingEntity::Update(double deltaTime)
@@ -182,22 +183,41 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 	double x = m_position.getX();
 	double y = m_position.getY();
 
-	
+	if (m_type == EntityType::BALL)
+	{
+		if (x < 0 && (y > 230 && y < 370))
+		{
+			std::cout << "goal left";
+			m_pitch->goalScored(LEFT);
+		}
+
+		if (x > 1000 && (y > 230 && y < 370))
+		{
+			std::cout << "goal right";
+			m_pitch->goalScored(RIGHT);
+		}
+	}
+
+
 	if (x > 1000)
 	{
 		m_velocity.setX(-m_velocity.getX());
+		m_position.setX(1000);
 	}
 	else if (x < -0)
 	{
 		m_velocity.setX(-m_velocity.getX());
+		m_position.setX(0);
 	}
 
-	if (y > 610)
+	if (y > 600)
 	{
 		m_velocity.setY(-m_velocity.getY());
+		m_position.setY(600);
 	}
-	else if (y < -10)
+	else if (y < -0)
 	{
 		m_velocity.setY(-m_velocity.getY());
+		m_position.setY(0);
 	}
 }

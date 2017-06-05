@@ -55,8 +55,8 @@ std::string WaitState::name()
 #pragma region TestState
 void TestState::enter(MovingEntity * entity)
 {
-	entity->setHeading(Vector2D(10, 20));
-	entity->setVelocity(Vector2D(500, 500));
+	entity->setHeading(Vector2D(-50, 20));
+	entity->setVelocity(Vector2D(500, 0));
 }
 
 void TestState::execute(MovingEntity * entity, double deltaTime)
@@ -78,7 +78,7 @@ std::string TestState::name()
 #pragma region ChaseState
 void ChaseState::enter(MovingEntity * entity)
 {
-	entity->setHeading(Vector2D(10, 20));
+	entity->setHeading(Vector2D(20, 0));
 	entity->setVelocity(Vector2D(500, 500));
 }
 
