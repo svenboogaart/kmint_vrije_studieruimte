@@ -6,6 +6,16 @@
 
 
 
+bool MovingEntity::isClosestToBall()
+{
+	return m_closestToBall;
+}
+
+void MovingEntity::setClosestToBall(bool val)
+{
+	m_closestToBall = val;
+}
+
 Vector2D MovingEntity::GetStartPosition()
 {
 	return m_startPosition;

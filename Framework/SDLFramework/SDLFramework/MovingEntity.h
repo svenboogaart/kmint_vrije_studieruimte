@@ -12,6 +12,8 @@ enum EntityType { BALL, FIELDPLAYER, GOALY };
 class MovingEntity
 {
 protected:
+
+	bool m_closestToBall;
 	//richtings vector geeft de snelheid en richtings aan.
 	Vector2D m_velocity;
 	Vector2D m_heading;
@@ -29,6 +31,8 @@ protected:
 	Vector2D  m_startPosition;
 
 public:
+	bool isClosestToBall();
+	void setClosestToBall(bool val);
 	EntityType m_type;
 	Vector2D GetStartPosition();
 	void Update(double deltaTime);

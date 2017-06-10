@@ -4,9 +4,11 @@
 #include <memory>
 #include <algorithm>
 #include "MovingEntityStates.h"
+#include "SoccerPitch.h"
 
-SoccerTeam::SoccerTeam(Vector2D goalyPosition, Vector2D defenderOnePosition, Vector2D defenderTwoPosition, Vector2D attackerOnePosition, Vector2D attackerTwoPosition, SDL_Texture* _m_texture, SoccerPitch* pitch)
+SoccerTeam::SoccerTeam( Vector2D goalyPosition, Vector2D defenderOnePosition, Vector2D defenderTwoPosition, Vector2D attackerOnePosition, Vector2D attackerTwoPosition, SDL_Texture* _m_texture, SoccerPitch* pitch)
 {
+	m_pitch = pitch;
 	players.push_back( new GoalKeeper(goalyPosition,pitch));
 	players.push_back( new FieldPlayer(defenderOnePosition,_m_texture, pitch));
 	players.push_back(new FieldPlayer(defenderTwoPosition, _m_texture, pitch));
@@ -19,7 +21,24 @@ SoccerTeam::SoccerTeam(Vector2D goalyPosition, Vector2D defenderOnePosition, Vec
 
 void SoccerTeam::Update(double detlaTime)
 {
+	if (!m_playerClosestToBall)
+	{
+		m_playerClosestToBall = players.back();
+	}
+	Vector2D position = m_pitch->getBall()->getPosition();
 	for (PlayerBase* player : players) {
+
+		//calculate the player closest to the ball
+		if (player != m_playerClosestToBall)
+		{
+			player->setClosestToBall(false);
+			if (player->getPosition().distanceTo(position) < m_playerClosestToBall->getPosition().distanceTo(position))
+			{
+				m_playerClosestToBall = player;
+				player->setClosestToBall(true);
+			}
+		}
+		
 		player->Update(detlaTime);
 	}
 }

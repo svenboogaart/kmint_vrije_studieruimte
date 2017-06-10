@@ -9,15 +9,24 @@ void ReturnState::enter(MovingEntity * ball)
 {
 }
 
-void ReturnState::execute(MovingEntity * ball , double deltaTime)
+void ReturnState::execute(MovingEntity * entity , double deltaTime)
 {
-	Vector2D target = ball->GetStartPosition();
-	ball->move(ball->getSteeringBehaviour()->arrive(target),deltaTime);
-	if (ball->getPosition().distanceTo(target) < 5)
+	if (entity->isClosestToBall())
 	{
-		std::shared_ptr<WaitState> nextState = std::make_shared<WaitState>();
-		ball->getStateMachine()->changeState(nextState);
+		std::shared_ptr<ChaseState> nextState = std::make_shared<ChaseState>();
+		entity->getStateMachine()->changeState(nextState);
 	}
+	else
+	{
+		Vector2D target = entity->GetStartPosition();
+		entity->move(entity->getSteeringBehaviour()->arrive(target), deltaTime);
+		if (entity->getPosition().distanceTo(target) < 5)
+		{
+			std::shared_ptr<WaitState> nextState = std::make_shared<WaitState>();
+			entity->getStateMachine()->changeState(nextState);
+		}
+	}
+	
 }
 
 void ReturnState::exit(MovingEntity * ball)
@@ -36,9 +45,13 @@ void WaitState::enter(MovingEntity *)
 
 }
 
-void WaitState::execute(MovingEntity *, double deltaTime)
+void WaitState::execute(MovingEntity * entity, double deltaTime)
 {
-
+	if (entity->isClosestToBall())
+	{
+		std::shared_ptr<ChaseState> nextState = std::make_shared<ChaseState>();
+		entity->getStateMachine()->changeState(nextState);
+	}
 }
 
 void WaitState::exit(MovingEntity *)
@@ -56,7 +69,7 @@ std::string WaitState::name()
 void TestState::enter(MovingEntity * entity)
 {
 	entity->setHeading(Vector2D(-50, 20));
-	entity->setVelocity(Vector2D(500, 0));
+	entity->setVelocity(Vector2D(500, 500));
 }
 
 void TestState::execute(MovingEntity * entity, double deltaTime)
@@ -79,13 +92,22 @@ std::string TestState::name()
 void ChaseState::enter(MovingEntity * entity)
 {
 	entity->setHeading(Vector2D(20, 0));
-	entity->setVelocity(Vector2D(500, 500));
+	entity->setVelocity(Vector2D(500, 650));
 }
 
 void ChaseState::execute(MovingEntity * entity, double deltaTime)
 {
+	if (entity->m_type != BALL)
+	{
+		entity->move(entity->getSteeringBehaviour()->pursuit(entity->getPitch()->getBall()), deltaTime);
+		
+		if(!entity->isClosestToBall())
+		{
+			std::shared_ptr<ReturnState> nextState = std::make_shared<ReturnState>();
+			entity->getStateMachine()->changeState(nextState);
+		}
+	}
 	
-	entity->move(entity->getSteeringBehaviour()->pursuit(entity->getPitch()->getBall()),deltaTime);
 }
 
 void ChaseState::exit(MovingEntity *)

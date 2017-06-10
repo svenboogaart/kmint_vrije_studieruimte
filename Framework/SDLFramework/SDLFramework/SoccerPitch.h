@@ -2,6 +2,7 @@
 #include "FWApplication.h"
 #include "SoccerBall.h"
 #include "SoccerTeam.h"
+#include "SoccerPitch.h"
 
 enum GOAL{ LEFT, RIGHT };
 

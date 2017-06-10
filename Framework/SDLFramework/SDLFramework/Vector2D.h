@@ -15,6 +15,8 @@ public:
 	void truncate(double maxValue);
 	Vector2D normalized();
 	Vector2D opposite();
+	Vector2D toPosition(Vector2D destination);
+	Vector2D getHeading();
 	double getLength();
 	double distanceTo(const Vector2D&);
 	bool operator==(const Vector2D&);

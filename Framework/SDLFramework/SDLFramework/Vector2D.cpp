@@ -57,6 +57,23 @@ Vector2D Vector2D::opposite()
 	return Vector2D(-m_x, -m_y);
 }
 
+Vector2D Vector2D::toPosition(Vector2D destination)
+{
+	return Vector2D(m_x - destination.getX(), m_y - destination.getY());
+}
+
+Vector2D Vector2D::getHeading()
+{
+
+	Vector2D m_heading = normalized();
+	if (m_x == 0 && m_y == 0)
+	{
+		m_heading = Vector2D(0, 0);
+	}
+
+	return Vector2D();
+}
+
 double Vector2D::getLength()
 {
 	double returnVal = sqrt(m_x * m_x + m_y * m_y);
@@ -70,7 +87,12 @@ double Vector2D::distanceTo(const Vector2D & destination)
 	//we dont use sqrt because it's expensive.
 	//double distance = sqrt(differenceX*differenceX + differenceY * differenceY);
 	double distance = differenceX*differenceX + differenceY * differenceY;
-	return fabs(distance);
+	double fabbed  = fabs(distance);
+	if (fabbed < 0)
+	{
+		std::cout << "lower than 0";
+	}
+	return fabbed;
 }
 
 bool Vector2D::operator==(const Vector2D & other)

@@ -33,6 +33,10 @@ Vector2D SteeringBehaviors::arrive(Vector2D destination)
 
 	//afstand naar doelwit
 	double distance = toTarget.getLength();
+	if (distance < 2)
+	{
+		distance = 2;
+	}
 
 	//Als hij niet geariveerd is
 	if (distance > 0)
@@ -46,7 +50,7 @@ Vector2D SteeringBehaviors::arrive(Vector2D destination)
 			speed = m_entity->getMaxSpeed();
 		}
 
-		Vector2D desiredVelocity = toTarget * speed / distance;
+		Vector2D desiredVelocity = (toTarget * speed / distance)*2;
 
 		return(desiredVelocity - m_entity->getVelocity());
 	}
@@ -96,7 +100,11 @@ Vector2D SteeringBehaviors::wander()
 Vector2D SteeringBehaviors::pursuit(MovingEntity* evader)
 {
 	Vector2D toEvader = evader->getPosition() - m_entity->getPosition();
-	double lookAheadTime = toEvader.getLength() / (m_entity->getMaxSpeed() + evader->getVelocity().getLength());
+	double lookAheadTime = 1;
+	if (toEvader.getLength() > 2)
+	{
+		lookAheadTime = toEvader.getLength() / (m_entity->getMaxSpeed() + evader->getVelocity().getLength());
+	}
 	return seek(evader->getPosition() + evader->getVelocity() * lookAheadTime);
 }
 
