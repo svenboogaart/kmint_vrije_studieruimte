@@ -12,7 +12,7 @@ enum EntityType { BALL, FIELDPLAYER, GOALY };
 class MovingEntity
 {
 protected:
-
+	double m_lastKick;
 	bool m_closestToBall;
 	//richtings vector geeft de snelheid en richtings aan.
 	Vector2D m_velocity;
@@ -38,7 +38,8 @@ public:
 	void Update(double deltaTime);
 	void Render();
 	bool voidHandleMessage(Telegram telegram);
-
+	void KickBall(Vector2D direction);
+	bool CanKick();
 	MovingEntity(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate, SoccerPitch* pitch);
 	~MovingEntity();
 	double getMaxSpeed();

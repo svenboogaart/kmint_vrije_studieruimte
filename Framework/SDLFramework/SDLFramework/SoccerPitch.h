@@ -18,6 +18,7 @@ private:
 	SoccerTeam * m_blueTeam;
 	void PrintScore();
 public:
+	bool m_keeperHasBall = false;;
 	SoccerPitch();
 	~SoccerPitch();
 	void Update(double deltaTime);

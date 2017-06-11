@@ -1,6 +1,6 @@
 #include "SoccerBall.h"
 #include "MovingEntityStates.h"
-
+#include <math.h> 
 
 
 SoccerBall::SoccerBall(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate, SoccerPitch* pitch)
@@ -19,11 +19,20 @@ void SoccerBall::Kick(Vector2D direction, double force)
 {
 }
 
-void SoccerBall::Trap()
+void SoccerBall::Trap(MovingEntity * owner)
 {
+	m_owner = owner;
+	m_velocity = Vector2D(0, 0);
 }
 
 double SoccerBall::TimeToCoverDistance(Vector2D from, Vector2D to, double force)
 {
-	return 0.0;
+	double length = sqrt(from.distanceTo(to));
+
+	return length/force;
+}
+
+Vector2D SoccerBall::FuturePosition(double time)
+{
+	return  m_position + (m_velocity*time);
 }

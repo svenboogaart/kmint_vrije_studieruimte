@@ -25,6 +25,10 @@ Vector2D MovingEntity::GetStartPosition()
 void MovingEntity::Update(double deltaTime)
 {
 	m_stateMachine->update(deltaTime);
+	if(m_lastKick >= 0)
+	{
+		m_lastKick -= deltaTime;
+	}
 }
 
 void MovingEntity::Render()
@@ -40,6 +44,16 @@ void MovingEntity::Render()
 bool MovingEntity::voidHandleMessage(Telegram telegram)
 {
 	return false;
+}
+
+void MovingEntity::KickBall(Vector2D direction)
+{
+	m_lastKick = 0.8;
+}
+
+bool MovingEntity::CanKick()
+{
+	return (m_lastKick < 0);
 }
 
 MovingEntity::MovingEntity(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate, SoccerPitch* pitch) :
@@ -172,20 +186,30 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 	// acceleration = Force/Mass
 	Vector2D acceleration = steeringForce / m_mass;
 
-
+	
 	m_velocity += acceleration * deltaTime;
 
+	if (m_type == EntityType::BALL)
+	{
+		double friction = 0.05;
+		if (!m_velocity.getLength() < deltaTime * friction)
+		{
+			
+			m_velocity = m_velocity * (1 - friction * deltaTime);
+		}
+	}
 	//make sure entity does not exceed maximum velocity
 	m_velocity.truncate(m_maxSpeed);
-
+	
 
 	//update the position
 	m_position += m_velocity * deltaTime;
-
+	
 	if (m_velocity.getLength() > 0, 00000001)
 	{
 		m_heading = m_velocity.normalized();
 	}
+	
 
 	FWApplication::GetInstance()->SetColor(Color(50, 50, 255, 255));
 	//wrapAround
@@ -195,6 +219,7 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 
 	if (m_type == EntityType::BALL)
 	{
+
 		if (x < 0 && (y > 230 && y < 370))
 		{
 			std::cout << "goal left";

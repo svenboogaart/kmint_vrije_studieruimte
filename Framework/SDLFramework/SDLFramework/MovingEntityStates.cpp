@@ -3,6 +3,7 @@
 #include "SteeringBehaviors.h"
 #include <memory>
 #include "SoccerPitch.h"
+#include "FieldPlayer.h"
 
 #pragma region ReturnState
 void ReturnState::enter(MovingEntity * ball)
@@ -99,8 +100,12 @@ void ChaseState::execute(MovingEntity * entity, double deltaTime)
 {
 	if (entity->m_type != BALL)
 	{
-		entity->move(entity->getSteeringBehaviour()->pursuit(entity->getPitch()->getBall()), deltaTime);
-		
+		SoccerBall* ball = entity->getPitch()->getBall();
+		entity->move(entity->getSteeringBehaviour()->pursuit(ball), deltaTime);
+		if (entity->getPosition().distanceTo(ball->getPosition()) < 5)
+		{
+			//ball->Trap(entity);
+		}
 		if(!entity->isClosestToBall())
 		{
 			std::shared_ptr<ReturnState> nextState = std::make_shared<ReturnState>();
@@ -120,3 +125,30 @@ std::string ChaseState::name()
 	return "chase state";
 }
 #pragma endregion ChaseState
+
+
+#pragma region KickState
+void KickState::enter(FieldPlayer * player)
+{
+	player->getTeam()->SetControllingPlayer(player);
+	if (!player->IsReadyForKick())
+	{
+		std::shared_ptr<ChaseState> nextState = std::make_shared<ChaseState>();
+		player->getStateMachine()->changeState(nextState);
+	}
+}
+
+void KickState::execute(FieldPlayer * player, double deltaTime)
+{
+	
+}
+
+void KickState::exit(FieldPlayer *)
+{
+}
+
+std::string KickState::name()
+{
+	return std::string();
+}
+#pragma endregion KickState
