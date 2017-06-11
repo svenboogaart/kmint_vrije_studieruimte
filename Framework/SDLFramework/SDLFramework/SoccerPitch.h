@@ -6,7 +6,6 @@
 
 enum GOAL{ LEFT, RIGHT };
 
-
 class SoccerPitch
 {
 
@@ -18,10 +17,13 @@ private:
 	SoccerTeam * m_blueTeam;
 	void PrintScore();
 public:
-	bool m_keeperHasBall = false;;
+	bool m_keeperHasBall = false;
+	SoccerTeam * getTeam(TEAMCOLOR color);
+	void setControl(TEAMCOLOR color);
 	SoccerPitch();
 	~SoccerPitch();
 	void Update(double deltaTime);
+	bool EveryBodyIsHome();
 	void Render();
 	SoccerBall * getBall();
 	void goalScored(GOAL position);

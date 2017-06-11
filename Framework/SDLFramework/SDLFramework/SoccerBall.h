@@ -12,6 +12,7 @@ public:
 	void Trap(MovingEntity *);
 	double TimeToCoverDistance(Vector2D from, Vector2D to, double force);
 	Vector2D FuturePosition(double timne);
+	void Update(double deltaTime);
 
 };
 

@@ -1,16 +1,16 @@
 #include "MovingEntityStates.h"
-#include "MovingEntity.h"
+#include "PlayerBase.h"
 #include "SteeringBehaviors.h"
 #include <memory>
 #include "SoccerPitch.h"
 #include "FieldPlayer.h"
 
 #pragma region ReturnState
-void ReturnState::enter(MovingEntity * ball)
+void ReturnState::enter(PlayerBase * ball)
 {
 }
 
-void ReturnState::execute(MovingEntity * entity , double deltaTime)
+void ReturnState::execute(PlayerBase * entity , double deltaTime)
 {
 	if (entity->isClosestToBall())
 	{
@@ -19,7 +19,7 @@ void ReturnState::execute(MovingEntity * entity , double deltaTime)
 	}
 	else
 	{
-		Vector2D target = entity->GetStartPosition();
+		Vector2D target = entity->getTargetPosition();
 		entity->move(entity->getSteeringBehaviour()->arrive(target), deltaTime);
 		if (entity->getPosition().distanceTo(target) < 5)
 		{
@@ -30,7 +30,7 @@ void ReturnState::execute(MovingEntity * entity , double deltaTime)
 	
 }
 
-void ReturnState::exit(MovingEntity * ball)
+void ReturnState::exit(PlayerBase * ball)
 {
 }
 
@@ -41,12 +41,12 @@ std::string ReturnState::name()
 #pragma endregion ReturnState
 
 #pragma region WaitState
-void WaitState::enter(MovingEntity *)
+void WaitState::enter(PlayerBase *)
 {
 
 }
 
-void WaitState::execute(MovingEntity * entity, double deltaTime)
+void WaitState::execute(PlayerBase * entity, double deltaTime)
 {
 	if (entity->isClosestToBall())
 	{
@@ -55,7 +55,7 @@ void WaitState::execute(MovingEntity * entity, double deltaTime)
 	}
 }
 
-void WaitState::exit(MovingEntity *)
+void WaitState::exit(PlayerBase *)
 {
 
 }
@@ -67,18 +67,18 @@ std::string WaitState::name()
 #pragma endregion WaitState
 
 #pragma region TestState
-void TestState::enter(MovingEntity * entity)
+void TestState::enter(PlayerBase * entity)
 {
 	entity->setHeading(Vector2D(-50, 20));
 	entity->setVelocity(Vector2D(500, 500));
 }
 
-void TestState::execute(MovingEntity * entity, double deltaTime)
+void TestState::execute(PlayerBase * entity, double deltaTime)
 {
 	entity->move(Vector2D(0, 0), deltaTime);
 }
 
-void TestState::exit(MovingEntity *)
+void TestState::exit(PlayerBase *)
 {
 
 }
@@ -90,21 +90,22 @@ std::string TestState::name()
 #pragma endregion TestState
 
 #pragma region ChaseState
-void ChaseState::enter(MovingEntity * entity)
+void ChaseState::enter(PlayerBase * entity)
 {
 	entity->setHeading(Vector2D(20, 0));
 	entity->setVelocity(Vector2D(500, 650));
 }
 
-void ChaseState::execute(MovingEntity * entity, double deltaTime)
+void ChaseState::execute(PlayerBase * entity, double deltaTime)
 {
 	if (entity->m_type != BALL)
 	{
 		SoccerBall* ball = entity->getPitch()->getBall();
 		entity->move(entity->getSteeringBehaviour()->pursuit(ball), deltaTime);
-		if (entity->getPosition().distanceTo(ball->getPosition()) < 5)
+		if (entity->getPosition().distanceTo(ball->getPosition()) < 120)
 		{
 			//ball->Trap(entity);
+			entity->getPitch()->setControl(entity->getTeam()->getColor());
 		}
 		if(!entity->isClosestToBall())
 		{
@@ -115,7 +116,7 @@ void ChaseState::execute(MovingEntity * entity, double deltaTime)
 	
 }
 
-void ChaseState::exit(MovingEntity *)
+void ChaseState::exit(PlayerBase *)
 {
 
 }
@@ -128,7 +129,7 @@ std::string ChaseState::name()
 
 
 #pragma region KickState
-void KickState::enter(FieldPlayer * player)
+void KickState::enter(PlayerBase * player)
 {
 	player->getTeam()->SetControllingPlayer(player);
 	if (!player->IsReadyForKick())
@@ -138,12 +139,12 @@ void KickState::enter(FieldPlayer * player)
 	}
 }
 
-void KickState::execute(FieldPlayer * player, double deltaTime)
+void KickState::execute(PlayerBase * player, double deltaTime)
 {
 	
 }
 
-void KickState::exit(FieldPlayer *)
+void KickState::exit(PlayerBase *)
 {
 }
 

@@ -6,6 +6,11 @@
 
 
 
+Vector2D MovingEntity::getTargetPosition()
+{
+	return m_targetPosition;
+}
+
 bool MovingEntity::isClosestToBall()
 {
 	return m_closestToBall;
@@ -24,11 +29,7 @@ Vector2D MovingEntity::GetStartPosition()
 
 void MovingEntity::Update(double deltaTime)
 {
-	m_stateMachine->update(deltaTime);
-	if(m_lastKick >= 0)
-	{
-		m_lastKick -= deltaTime;
-	}
+
 }
 
 void MovingEntity::Render()
@@ -65,15 +66,13 @@ MovingEntity::MovingEntity(double x, double y, int width, int height, double mas
 	m_width(width),
 	m_position(Vector2D(500, 300)),
 	m_startPosition(Vector2D(x, y)),
-	m_pitch(pitch)
+	m_pitch(pitch),
+	m_targetPosition(m_startPosition)
 {
 	m_velocity = Vector2D(0, 0);
 	m_heading = Vector2D(0, 0);
 	m_steering = std::make_shared<SteeringBehaviors>(this);
 	m_texture = FWApplication::GetInstance()->LoadTexture("pill.png");
-	m_stateMachine = std::make_shared<StateMachine<MovingEntity>>(this);
-	std::shared_ptr<ReturnState> initialState = std::make_shared<ReturnState>();
-	m_stateMachine->setCurrentState(initialState);
 }
 
 MovingEntity::~MovingEntity()
@@ -145,11 +144,6 @@ std::shared_ptr<SteeringBehaviors> MovingEntity::getSteeringBehaviour()
 	
 }
 
-std::shared_ptr<StateMachine<MovingEntity>> MovingEntity::getStateMachine()
-{
-	return m_stateMachine;
-}
-
 
 Vector2D MovingEntity::m_side()
 {
@@ -195,7 +189,7 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 		if (!m_velocity.getLength() < deltaTime * friction)
 		{
 			
-			m_velocity = m_velocity * (1 - friction * deltaTime);
+			//m_velocity = m_velocity * (1 - friction * deltaTime);
 		}
 	}
 	//make sure entity does not exceed maximum velocity
@@ -255,4 +249,13 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 		m_velocity.setY(-m_velocity.getY());
 		m_position.setY(0);
 	}
+}
+
+bool MovingEntity::IsHome()
+{
+	if (getPosition().distanceTo(m_startPosition) < 5)
+	{
+		return true;
+	}
+	return false;
 }
