@@ -92,8 +92,8 @@ std::string TestState::name()
 #pragma region ChaseState
 void ChaseState::enter(PlayerBase * entity)
 {
-	entity->setHeading(Vector2D(20, 0));
-	entity->setVelocity(Vector2D(500, 650));
+	//entity->setHeading(Vector2D(20, 0));
+	//entity->setVelocity(Vector2D(500, 650));
 }
 
 void ChaseState::execute(PlayerBase * entity, double deltaTime)
@@ -106,6 +106,11 @@ void ChaseState::execute(PlayerBase * entity, double deltaTime)
 		{
 			//ball->Trap(entity);
 			entity->getPitch()->setControl(entity->getTeam()->getColor());
+		}
+		if (entity->getPosition().distanceTo(ball->getPosition()) < 100 && entity->CanKick())
+		{
+			std::shared_ptr<KickState> nextState = std::make_shared<KickState>();
+			entity->getStateMachine()->changeState(nextState);
 		}
 		if(!entity->isClosestToBall())
 		{
@@ -141,7 +146,22 @@ void KickState::enter(PlayerBase * player)
 
 void KickState::execute(PlayerBase * player, double deltaTime)
 {
-	
+	if (player->getTeam()->getReceiver() != NULL && player->getTeam()->getReceiver() != nullptr)
+	{
+		player->getStateMachine()->changeState(std::make_shared<ChaseState>());
+		return;
+	}
+	Vector2D desiredShot;
+	if (player->getTeam()->getColor() == TEAMCOLOR::RED)
+	{
+		desiredShot = Vector2D(0, 300);
+	}
+	else
+	{
+		desiredShot = Vector2D(1000, 300);
+	}
+	Vector2D difference = desiredShot - player->getPitch()->getBall()->getPosition();
+	player->getPitch()->getBall()->Kick(difference, 1);
 }
 
 void KickState::exit(PlayerBase *)
@@ -153,3 +173,32 @@ std::string KickState::name()
 	return std::string();
 }
 #pragma endregion KickState
+
+void ReceiveState::enter(PlayerBase * player)
+{
+}
+
+void ReceiveState::execute(PlayerBase * player, double deltaTime)
+{
+	if (player->isClosestToBall())
+	{
+		std::shared_ptr<ChaseState> nextState = std::make_shared<ChaseState>();
+		player->getStateMachine()->changeState(nextState);
+	}
+	else if (!player->getPosition().distanceTo(player->getReceivePosition()) < 5)
+	{
+		player->move(player->getSteeringBehaviour()->arrive(player->getReceivePosition()), deltaTime);
+	}
+	else {
+		player->setVelocity(Vector2D(0, 0));
+	}
+}
+
+void ReceiveState::exit(PlayerBase *)
+{
+}
+
+std::string ReceiveState::name()
+{
+	return std::string();
+}

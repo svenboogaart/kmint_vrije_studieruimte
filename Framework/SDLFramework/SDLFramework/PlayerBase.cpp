@@ -38,6 +38,11 @@ void PlayerBase::SetState(std::shared_ptr<State<PlayerBase>> state)
 	m_stateMachine->setCurrentState(state);
 }
 
+Vector2D PlayerBase::getReceivePosition()
+{
+	return m_receivePosition;
+}
+
 bool PlayerBase::WithingShootingRange()
 {
 	return false;
@@ -50,7 +55,12 @@ bool PlayerBase::AtTarget()
 
 bool PlayerBase::IsReadyForKick()
 {
-	return false;
+	return (m_kicked <= 0);
+}
+
+void PlayerBase::kicked()
+{
+	m_kicked = 0.4;
 }
 
 void PlayerBase::setAttackingPosition()
@@ -60,11 +70,23 @@ void PlayerBase::setAttackingPosition()
 
 void PlayerBase::Update(double deltaTime)
 {
+	if (m_kicked > 0)
+	{
+		m_kicked -= deltaTime;
+	}
 	m_stateMachine->update(deltaTime);
 }
 
 void PlayerBase::setDefendingPosition()
 {
 	m_targetPosition = m_startPosition;
+}
+
+void PlayerBase::ReceiveBall(Vector2D position)
+{
+	m_receivePosition = position;
+	m_team->SetReceivingPlayer(this);
+	m_team->SetControllingPlayer(this);
+	SetState(std::make_shared<ReceiveState>());
 }
 

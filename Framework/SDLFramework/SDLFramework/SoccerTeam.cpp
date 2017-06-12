@@ -110,6 +110,11 @@ void SoccerTeam::SetClosestToBall(PlayerBase * player)
 	m_playerClosestToBall = player;
 }
 
+PlayerBase * SoccerTeam::getReceiver()
+{
+	return m_receivingPlayer;
+}
+
 void SoccerTeam::ReturnAllHome()
 {
 	for (PlayerBase* player : players) {

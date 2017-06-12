@@ -54,7 +54,7 @@ void MovingEntity::KickBall(Vector2D direction)
 
 bool MovingEntity::CanKick()
 {
-	return (m_lastKick < 0);
+	return (m_lastKick <= 0);
 }
 
 MovingEntity::MovingEntity(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate, SoccerPitch* pitch) :
@@ -189,7 +189,7 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 		if (!m_velocity.getLength() < deltaTime * friction)
 		{
 			
-			//m_velocity = m_velocity * (1 - friction * deltaTime);
+			m_velocity = m_velocity * (1 - friction * deltaTime);
 		}
 	}
 	//make sure entity does not exceed maximum velocity

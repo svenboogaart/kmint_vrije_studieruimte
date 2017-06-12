@@ -76,4 +76,21 @@ public:
 };
 
 
+class ReceiveState : public State<PlayerBase>
+{
+public:
+
+	// Inherited via State
+	virtual void enter(PlayerBase*) override;
+
+	virtual void execute(PlayerBase*, double deltaTime) override;
+
+	virtual void exit(PlayerBase*) override;
+	virtual std::string name() override;
+
+};
+
+
+
+
 

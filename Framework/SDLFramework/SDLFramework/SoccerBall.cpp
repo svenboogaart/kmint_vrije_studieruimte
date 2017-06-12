@@ -15,6 +15,7 @@ SoccerBall::SoccerBall(double x, double y, int width, int height, double mass, d
 
 void SoccerBall::Kick(Vector2D direction, double force)
 {
+	m_velocity = direction;
 }
 
 void SoccerBall::Trap(MovingEntity * owner)
