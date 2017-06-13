@@ -28,6 +28,7 @@ SoccerTeam::SoccerTeam(Vector2D goalyPosition, Vector2D defenderOnePosition, Vec
 
 void SoccerTeam::setInControl(bool control)
 {
+	m_receivingPlayer = nullptr;
 	m_inControl = control;
 }
 
@@ -113,6 +114,22 @@ void SoccerTeam::SetClosestToBall(PlayerBase * player)
 PlayerBase * SoccerTeam::getReceiver()
 {
 	return m_receivingPlayer;
+}
+
+PlayerBase * SoccerTeam::closestToGoal()
+{
+	PlayerBase* closestToGoal = nullptr;
+	for (PlayerBase* player : players) {
+		if (closestToGoal == nullptr)
+		{
+			closestToGoal = player;
+		}
+		if (player->distanceToGoal() < closestToGoal->distanceToGoal())
+		{
+			closestToGoal = player;
+		}
+	}
+	return closestToGoal;
 }
 
 void SoccerTeam::ReturnAllHome()

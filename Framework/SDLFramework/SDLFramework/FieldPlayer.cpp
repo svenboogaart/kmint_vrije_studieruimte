@@ -17,3 +17,6 @@ FieldPlayer::FieldPlayer(Vector2D initialPosition, SDL_Texture* _m_texture, Socc
 
 	m_targetPosition = initialPosition;
 }
+
+
+

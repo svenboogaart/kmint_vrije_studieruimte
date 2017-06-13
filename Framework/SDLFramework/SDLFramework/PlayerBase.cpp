@@ -60,7 +60,7 @@ bool PlayerBase::IsReadyForKick()
 
 void PlayerBase::kicked()
 {
-	m_kicked = 0.4;
+	m_kicked = 0.3;
 }
 
 void PlayerBase::setAttackingPosition()
@@ -90,3 +90,20 @@ void PlayerBase::ReceiveBall(Vector2D position)
 	SetState(std::make_shared<ReceiveState>());
 }
 
+
+double PlayerBase::distanceToGoal()
+{
+	if (isRedTeam())
+	{
+		return(m_position.distanceTo(Vector2D(0, 300)));
+	}
+	else
+	{
+		return (m_position.distanceTo(Vector2D(1000, 300)));
+	}
+}
+
+bool PlayerBase::isRedTeam()
+{
+	return (getTeam()->getColor() == TEAMCOLOR::RED);
+}

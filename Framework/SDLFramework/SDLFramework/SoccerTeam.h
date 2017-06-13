@@ -39,6 +39,7 @@ public:
 	void SetSupportingPlayer(PlayerBase *);
 	void SetClosestToBall(PlayerBase *);
 	PlayerBase * getReceiver();
+	PlayerBase * closestToGoal();
 	void ReturnAllHome();
 	void RequestPass(PlayerBase*);
 	void AddGoal();

@@ -20,6 +20,8 @@ void SoccerPitch::setControl(TEAMCOLOR color)
 {
 	if (!getTeam(color)->IsInControl())
 	{
+		m_redTeam->SetReceivingPlayer(nullptr);
+		m_blueTeam->SetReceivingPlayer(nullptr);
 		if (color == TEAMCOLOR::RED)
 		{
 			m_redTeam->setInControl(true);

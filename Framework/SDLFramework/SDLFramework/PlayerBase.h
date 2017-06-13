@@ -28,5 +28,7 @@ public:
 	void Update(double deltaTime);
 	void setDefendingPosition();
 	void ReceiveBall(Vector2D position);
+	double distanceToGoal();
+	bool isRedTeam();
 };
 

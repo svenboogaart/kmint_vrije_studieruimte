@@ -92,8 +92,6 @@ std::string TestState::name()
 #pragma region ChaseState
 void ChaseState::enter(PlayerBase * entity)
 {
-	//entity->setHeading(Vector2D(20, 0));
-	//entity->setVelocity(Vector2D(500, 650));
 }
 
 void ChaseState::execute(PlayerBase * entity, double deltaTime)
@@ -102,12 +100,12 @@ void ChaseState::execute(PlayerBase * entity, double deltaTime)
 	{
 		SoccerBall* ball = entity->getPitch()->getBall();
 		entity->move(entity->getSteeringBehaviour()->pursuit(ball), deltaTime);
-		if (entity->getPosition().distanceTo(ball->getPosition()) < 120)
+		if (entity->getPosition().distanceTo(ball->getPosition()) < 24*24)
 		{
 			//ball->Trap(entity);
 			entity->getPitch()->setControl(entity->getTeam()->getColor());
 		}
-		if (entity->getPosition().distanceTo(ball->getPosition()) < 100 && entity->CanKick())
+		if (entity->getPosition().distanceTo(ball->getPosition()) < 20*20 && entity->CanKick())
 		{
 			std::shared_ptr<KickState> nextState = std::make_shared<KickState>();
 			entity->getStateMachine()->changeState(nextState);
@@ -116,6 +114,17 @@ void ChaseState::execute(PlayerBase * entity, double deltaTime)
 		{
 			std::shared_ptr<ReturnState> nextState = std::make_shared<ReturnState>();
 			entity->getStateMachine()->changeState(nextState);
+		}
+		else if (entity->getPosition().distanceTo(ball->getPosition()) < 20 * 20 && !entity->CanKick())
+		{
+			
+			Vector2D desiredShot = entity->getPosition();
+		
+			Vector2D difference = desiredShot - entity->getPitch()->getBall()->getPosition();
+			entity->getPitch()->getBall()->Kick(difference, 1);
+		}
+		else {
+			//std::cout << "the end "<< entity->getPosition().distanceTo(ball->getPosition())<<"\n " ;
 		}
 	}
 	
@@ -146,13 +155,28 @@ void KickState::enter(PlayerBase * player)
 
 void KickState::execute(PlayerBase * player, double deltaTime)
 {
-	if (player->getTeam()->getReceiver() != NULL && player->getTeam()->getReceiver() != nullptr)
+	/*if (player->getTeam()->getReceiver() != player && player->getTeam()->getReceiver() != NULL && player->getTeam()->getReceiver() != nullptr)
+	{
+		player->getTeam()->SetReceivingPlayer(nullptr);
+		player->getStateMachine()->changeState(std::make_shared<ChaseState>());
+		return;
+	}
+	else
+	{
+		std::cout << "already a receiver \n";
+	}*/
+	Vector2D desiredShot;
+	if (player->getPosition().distanceTo(player->getPitch()->getBall()->getPosition()) > 20*20)
 	{
 		player->getStateMachine()->changeState(std::make_shared<ChaseState>());
 		return;
 	}
-	Vector2D desiredShot;
-	if (player->getTeam()->getColor() == TEAMCOLOR::RED)
+	if (player->getTeam()->closestToGoal() != player)
+	{
+		player->getTeam()->closestToGoal()->ReceiveBall(player->getPosition());
+		desiredShot = player->getTeam()->closestToGoal()->getPosition();
+	}
+	else if (player->getTeam()->getColor() == TEAMCOLOR::RED)
 	{
 		desiredShot = Vector2D(0, 300);
 	}
@@ -160,6 +184,7 @@ void KickState::execute(PlayerBase * player, double deltaTime)
 	{
 		desiredShot = Vector2D(1000, 300);
 	}
+	//player->getTeam()->SetReceivingPlayer(nullptr);
 	Vector2D difference = desiredShot - player->getPitch()->getBall()->getPosition();
 	player->getPitch()->getBall()->Kick(difference, 1);
 }
@@ -184,8 +209,21 @@ void ReceiveState::execute(PlayerBase * player, double deltaTime)
 	{
 		std::shared_ptr<ChaseState> nextState = std::make_shared<ChaseState>();
 		player->getStateMachine()->changeState(nextState);
+		return;
 	}
-	else if (!player->getPosition().distanceTo(player->getReceivePosition()) < 5)
+	if (player->getPosition().distanceTo(player->getPitch()->getBall()->getPosition()) < 10 * 10 && player->CanKick())
+	{
+		std::shared_ptr<KickState> nextState = std::make_shared<KickState>();
+		player->getStateMachine()->changeState(nextState);
+		return;
+	}
+	else if (player->getPosition().distanceTo(player->getPitch()->getBall()->getPosition()) < 10 * 10)
+	{
+		std::shared_ptr<ChaseState> nextState = std::make_shared<ChaseState>();
+		player->getStateMachine()->changeState(nextState);
+		return;
+	}
+	else if (!player->getPosition().distanceTo(player->getReceivePosition()) < 5 * 5)
 	{
 		player->move(player->getSteeringBehaviour()->arrive(player->getReceivePosition()), deltaTime);
 	}
