@@ -96,6 +96,7 @@
     <ClCompile Include="ExampleGameObject.cpp" />
     <ClCompile Include="MovingEntity.cpp" />
     <ClCompile Include="PlayerBase.cpp" />
+    <ClCompile Include="RandomGenerator.cpp" />
     <ClCompile Include="SoccerBall.cpp" />
     <ClCompile Include="SoccerPitch.cpp" />
     <ClCompile Include="SoccerTeam.cpp" />
@@ -123,6 +124,7 @@
     <ClInclude Include="Main.h" />
     <ClInclude Include="MovingEntity.h" />
     <ClInclude Include="PlayerBase.h" />
+    <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SoccerBall.h" />
     <ClInclude Include="SoccerPitch.h" />

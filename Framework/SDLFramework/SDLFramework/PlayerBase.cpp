@@ -1,7 +1,7 @@
 #include "PlayerBase.h"
 #include "MovingEntityStates.h"
 #include "SoccerTeam.h"
-
+#include "RandomGenerator.h"
 
 SoccerTeam * PlayerBase::getTeam()
 {
@@ -9,7 +9,7 @@ SoccerTeam * PlayerBase::getTeam()
 }
 
 PlayerBase::PlayerBase(Vector2D initialPosition, SoccerPitch* pitch, SoccerTeam * team)
-	:MovingEntity(initialPosition.getX(), initialPosition.getY(), 50, 50, 0.7, 70, 20, 2000,pitch)
+	:MovingEntity(initialPosition.getX(), initialPosition.getY(), 50, 50, 0.7, 90, 25, 2000,pitch)
 {
 	m_team = team;
 	m_stateMachine = std::make_shared<StateMachine<PlayerBase>>(this);
@@ -65,7 +65,20 @@ void PlayerBase::kicked()
 
 void PlayerBase::setAttackingPosition()
 {
-	m_targetPosition = m_attackPosition;
+	int max = 0;
+	int min = 5;
+	int randX = rand()%(max-min + 1) + min;
+	int randY = rand() % (max - min + 1) + min;
+	if (m_team->getColor() == TEAMCOLOR::BLUE)
+	{
+
+	m_targetPosition = m_attackPosition + Vector2D(randX, randY);
+	}
+	else
+	{
+		m_targetPosition = m_attackPosition - Vector2D(randX, randY);
+	}
+	//m_targetPosition = m_attackPosition;
 }
 
 void PlayerBase::Update(double deltaTime)
@@ -79,7 +92,19 @@ void PlayerBase::Update(double deltaTime)
 
 void PlayerBase::setDefendingPosition()
 {
-	m_targetPosition = m_startPosition;
+	int max = 50;
+	int min = 5;
+	int randX = rand() % (max - min + 1) + min;
+	int randY = rand() % (max - min + 1) + min;
+	if (m_team->getColor() == TEAMCOLOR::BLUE)
+	{
+
+		m_targetPosition = m_startPosition + Vector2D(randX, randY);
+	}
+	else
+	{
+		m_targetPosition = m_startPosition - Vector2D(randX, randY);
+	}
 }
 
 void PlayerBase::ReceiveBall(Vector2D position)

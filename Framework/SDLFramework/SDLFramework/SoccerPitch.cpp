@@ -47,10 +47,10 @@ SoccerPitch::SoccerPitch()
 {
 	m_texture = FWApplication::GetInstance()->LoadTexture("pitch.png");
 	m_ball = new SoccerBall(500, 300, 40, 40, 2, 210, 230, 300, this);
-	SDL_Texture* redTeamTexture = FWApplication::GetInstance()->LoadTexture("blueplayer.png");
-	SDL_Texture* blueTeamTexture = FWApplication::GetInstance()->LoadTexture("redplayer.png");
-	m_redTeam = new SoccerTeam( Vector2D(900, 300), Vector2D(720, 100), Vector2D(750, 500), Vector2D(550, 150), Vector2D(550, 450), redTeamTexture, this, 1000, TEAMCOLOR::RED);
-	m_blueTeam = new SoccerTeam( Vector2D(60, 300), Vector2D(220, 220), Vector2D(220, 380), Vector2D(450, 50), Vector2D(450, 550), blueTeamTexture, this,0, TEAMCOLOR::BLUE);
+	SDL_Texture* redTeamTexture = FWApplication::GetInstance()->LoadTexture("redplayer.png");
+	SDL_Texture* blueTeamTexture = FWApplication::GetInstance()->LoadTexture("blueplayer.png");
+	m_redTeam = new SoccerTeam( Vector2D(900, 300), Vector2D(720, 100), Vector2D(750, 400), Vector2D(550, 90), Vector2D(550, 520), redTeamTexture, this, 1000, TEAMCOLOR::RED);
+	m_blueTeam = new SoccerTeam( Vector2D(60, 300), Vector2D(220, 220), Vector2D(220, 380), Vector2D(450, 90), Vector2D(450, 520), blueTeamTexture, this,0, TEAMCOLOR::BLUE);
 }
 
 SoccerPitch::~SoccerPitch()
