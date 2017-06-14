@@ -178,11 +178,17 @@ void KickState::execute(PlayerBase * player, double deltaTime)
 	}
 	else if (player->getTeam()->getColor() == TEAMCOLOR::RED)
 	{
-		desiredShot = Vector2D(0, 300);
+		int max = 50;
+		int min = -50;
+		int randX = rand() % (max - min + 1) + min;
+		desiredShot = Vector2D(0, 300+ randX);
 	}
 	else
 	{
-		desiredShot = Vector2D(1000, 300);
+		int max = 50;
+		int min = -50;
+		int randX = rand() % (max - min + 1) + min;
+		desiredShot = Vector2D(1000, 300 + randX);
 	}
 	//player->getTeam()->SetReceivingPlayer(nullptr);
 	Vector2D difference = desiredShot - player->getPitch()->getBall()->getPosition();
