@@ -5,6 +5,7 @@
 #include <SDL_events.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
+#include "FWApplication.h"
 
 int BaseGameEntity::m_iNextValidId = 1;
 

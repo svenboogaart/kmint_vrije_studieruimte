@@ -1,30 +1,61 @@
 #pragma once
-#include "BaseGameEntity.h"
+#include "Vector2D.h"
+#include "Telegram.h"
+#include "FWApplication.h"
+#include "StateMachine.h"
+#include <memory>
+#include "SteeringBehaviors.h"
+class SoccerPitch;
+enum EntityType { BALL, FIELDPLAYER, GOALY };
 
-class MovingEntity : public BaseGameEntity
+class MovingEntity
 {
 protected:
+	double m_lastKick;
+	bool m_closestToBall;
 	//richtings vector geeft de snelheid en richtings aan.
 	Vector2D m_velocity;
 	Vector2D m_heading;
-
+	SDL_Texture* m_texture;
+	SoccerPitch* m_pitch;
 	double m_mass;
-	const double m_maxSpeed;
-	const double m_maxForce;
-	const double m_maxTurnRate;
-
+	double m_maxSpeed;
+	double m_maxForce;
+	double m_maxTurnRate;
+	Vector2D  m_position;
+	Vector2D  m_targetPosition;
+	int m_width;
+	int m_height;
+	std::shared_ptr<SteeringBehaviors> m_steering;
+	Vector2D  m_startPosition;
 
 public:
-	MovingEntity(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate);
+	Vector2D getTargetPosition();
+	bool isClosestToBall();
+	void setClosestToBall(bool val);
+	EntityType m_type;
+	Vector2D GetStartPosition();
+	void Update(double deltaTime);
+	void Render();
+	bool voidHandleMessage(Telegram telegram);
+	void KickBall(Vector2D direction);
+	bool CanKick();
+	MovingEntity(double x, double y, int width, int height, double mass, double maxSpeed, double maxForce, double maxTurnRate, SoccerPitch* pitch);
+	~MovingEntity();
 	double getMaxSpeed();
+	Vector2D getPosition();
 	Vector2D getVelocity();
 	Vector2D getHeading();
+	SoccerPitch* getPitch();
 	void setVelocity(Vector2D);
+	void setHeading(Vector2D);
 	void calculateHeading();
 	double getAngle();
+	std::shared_ptr<SteeringBehaviors> getSteeringBehaviour();
 	//Tegenovergestelde vector van de richtings vector (velocity)
 	Vector2D m_side();
 	double getMass();
-	void draw() override;
 	int getDirection();
+	void move(Vector2D influence, double deltaTime);
+	bool IsHome();
 };

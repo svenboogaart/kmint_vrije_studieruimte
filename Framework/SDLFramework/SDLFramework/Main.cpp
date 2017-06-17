@@ -6,20 +6,24 @@
 #include <time.h>
 
 #include "ExampleGameObject.h"
-
+#include "SoccerPitch.h"
 
 int main(int args[])
 {
 	//auto window = Window::CreateSDLWindow();
-	auto application = new FWApplication();
+	auto application = new FWApplication(50,50,1000,600);
+	auto pitch = new SoccerPitch();
 	if (!application->GetWindow())
 	{
 		LOG("Couldn't create window...");
 		return EXIT_FAILURE;
 	}
 	
-	application->SetTargetFPS(60);
+	application->SetTargetFPS(200);
 	application->SetColor(Color(255, 10, 40, 255));
+
+
+
 
 	// Dancing cow
 	ExampleGameObject *example = new ExampleGameObject();
@@ -46,6 +50,8 @@ int main(int args[])
 				}
 			}
 		}
+
+		
 		
 		// This is example code, replace with your own!
 
@@ -68,7 +74,10 @@ int main(int args[])
 		application->SetColor(Color(255, 255, 255, 255));
 
 		application->UpdateGameObjects();
-		application->RenderGameObjects();
+		
+		pitch->Update((float)application->mDeltaTimeMS / 1000.0f);
+		pitch->Render();
+		//application->RenderGameObjects();
 		application->EndTick();
 	}
 		
