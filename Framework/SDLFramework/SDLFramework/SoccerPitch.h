@@ -3,7 +3,8 @@
 #include "SoccerBall.h"
 #include "SoccerTeam.h"
 #include "SoccerPitch.h"
-
+#include <vector>
+#include "TriggerRegion.h"
 enum GOAL{ LEFT, RIGHT };
 
 class SoccerPitch
@@ -12,7 +13,7 @@ class SoccerPitch
 private:
 	SDL_Texture* m_texture;
 	SoccerBall * m_ball;
-
+	std::vector<std::shared_ptr<TriggerRegion>> m_triggers;
 	SoccerTeam * m_redTeam;
 	SoccerTeam * m_blueTeam;
 	void PrintScore();
@@ -28,5 +29,6 @@ public:
 	SoccerBall * getBall();
 	void goalScored(GOAL position);
 	void startRound();
+	void CheckTriggerRegions();
 };
 

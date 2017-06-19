@@ -28,7 +28,8 @@ protected:
 	int m_height;
 	std::shared_ptr<SteeringBehaviors> m_steering;
 	Vector2D  m_startPosition;
-
+	double m_speedMultiplier = 1;
+	double m_oilTime = 0;
 public:
 	Vector2D getTargetPosition();
 	bool isClosestToBall();
@@ -45,6 +46,7 @@ public:
 	double getMaxSpeed();
 	Vector2D getPosition();
 	Vector2D getVelocity();
+	void hitOil();
 	Vector2D getHeading();
 	SoccerPitch* getPitch();
 	void setVelocity(Vector2D);

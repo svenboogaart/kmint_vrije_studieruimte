@@ -98,6 +98,12 @@ Vector2D MovingEntity::getVelocity()
 	return m_velocity;
 }
 
+void MovingEntity::hitOil()
+{
+	m_oilTime = 3;
+	m_speedMultiplier = 0.5;
+}
+
 Vector2D MovingEntity::getHeading()
 {
 	calculateHeading();
@@ -193,7 +199,7 @@ void MovingEntity::move(Vector2D influence, double deltaTime)
 		}
 	}
 	//make sure entity does not exceed maximum velocity
-	m_velocity.truncate(m_maxSpeed);
+	m_velocity.truncate(m_maxSpeed*m_speedMultiplier);
 	
 
 	//update the position

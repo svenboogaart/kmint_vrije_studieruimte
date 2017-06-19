@@ -40,6 +40,7 @@ public:
 	void SetClosestToBall(PlayerBase *);
 	PlayerBase * getReceiver();
 	PlayerBase * closestToGoal();
+	std::vector<PlayerBase*> getPlayers();
 	void ReturnAllHome();
 	void RequestPass(PlayerBase*);
 	void AddGoal();

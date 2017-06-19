@@ -10,6 +10,7 @@ SoccerBall::SoccerBall(double x, double y, int width, int height, double mass, d
 	m_type = EntityType::BALL;
 	setHeading(Vector2D(-50, 20));
 	setVelocity(Vector2D(250, 210));
+	m_speedMultiplier = 1;
 }
 
 
@@ -38,5 +39,13 @@ Vector2D SoccerBall::FuturePosition(double time)
 
 void SoccerBall::Update(double deltaTime)
 {
+	if (m_oilTime <= 0)
+	{
+		m_speedMultiplier = 1;
+	}
+	if (m_oilTime > 0)
+	{
+		m_oilTime -= deltaTime;
+	}
 	move(Vector2D(0,0) , deltaTime);
 }

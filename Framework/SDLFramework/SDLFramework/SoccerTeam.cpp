@@ -132,6 +132,11 @@ PlayerBase * SoccerTeam::closestToGoal()
 	return closestToGoal;
 }
 
+std::vector<PlayerBase*> SoccerTeam::getPlayers()
+{
+	return players;
+}
+
 void SoccerTeam::ReturnAllHome()
 {
 	for (PlayerBase* player : players) {

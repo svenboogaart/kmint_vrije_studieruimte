@@ -83,6 +83,14 @@ void PlayerBase::setAttackingPosition()
 
 void PlayerBase::Update(double deltaTime)
 {
+	if (m_oilTime <= 0)
+	{
+		m_speedMultiplier = 1;
+	}
+	if (m_oilTime > 0)
+	{
+		m_oilTime -= deltaTime;
+	}
 	if (m_kicked > 0)
 	{
 		m_kicked -= deltaTime;
