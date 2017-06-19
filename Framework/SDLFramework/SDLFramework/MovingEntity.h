@@ -31,6 +31,7 @@ protected:
 	double m_speedMultiplier = 1;
 	double m_oilTime = 0;
 public:
+	void setTargetPosition(Vector2D target);
 	Vector2D getTargetPosition();
 	bool isClosestToBall();
 	void setClosestToBall(bool val);

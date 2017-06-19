@@ -53,6 +53,7 @@ SoccerPitch::SoccerPitch()
 	m_blueTeam = new SoccerTeam( Vector2D(60, 300), Vector2D(220, 220), Vector2D(220, 380), Vector2D(450, 90), Vector2D(450, 520), blueTeamTexture, this,0, TEAMCOLOR::BLUE);
 	m_triggers.push_back(std::make_shared<OilSpillRegion>(Vector2D(300, 500), 50, 50));
 	m_ball->setVelocity(Vector2D(500, 300));
+	m_oilManager = std::make_shared<OilManager>(this);
 }
 
 SoccerPitch::~SoccerPitch()
@@ -68,6 +69,7 @@ void SoccerPitch::Update(double deltaTime)
 	m_redTeam->Update(deltaTime);
 	m_blueTeam->Update(deltaTime);
 	CheckTriggerRegions();
+	m_oilManager->Update(deltaTime);
 }
 
 bool SoccerPitch::EveryBodyIsHome()
@@ -81,12 +83,14 @@ void SoccerPitch::Render()
 	{
 		FWApplication::GetInstance()->DrawTexture(m_texture, 500,300,1000,600);
 	}
+	for (auto trigger : m_triggers) {
+		trigger->Render();
+	}
 	m_ball->Render();
 	m_redTeam->Render();
 	m_blueTeam->Render();
-	for (auto trigger: m_triggers) {
-		trigger->Render();
-	}
+
+	m_oilManager->Render();
 }
 
 SoccerBall * SoccerPitch::getBall()
@@ -136,20 +140,19 @@ void SoccerPitch::CheckTriggerRegions()
 				isHit = true;
 			}
 		}
-		if (isHit)
-		{
-			int maxX = 900;
-			int minX = 100;
-			int maxY = 400;
-			int minY = 100;
-			int randX = rand() % (maxX - minX + 1) + minX;
-			int randY = rand() % (maxY - minY + 1) + minY;
-			trigger->ChangePosition(Vector2D(randX, randY));
-		}
+		
 	}
 
 	
 
+}
+
+void SoccerPitch::DropOil(Vector2D position)
+{
+	for (auto trigger : m_triggers)
+	{
+		trigger->ChangePosition(position);
+	}
 }
 
 

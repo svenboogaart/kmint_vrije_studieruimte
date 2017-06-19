@@ -6,6 +6,11 @@
 
 
 
+void MovingEntity::setTargetPosition(Vector2D target)
+{
+	m_targetPosition = target;
+}
+
 Vector2D MovingEntity::getTargetPosition()
 {
 	return m_targetPosition;
@@ -100,7 +105,7 @@ Vector2D MovingEntity::getVelocity()
 
 void MovingEntity::hitOil()
 {
-	m_oilTime = 3;
+	m_oilTime = 0.2;
 	m_speedMultiplier = 0.5;
 }
 
